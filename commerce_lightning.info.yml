@@ -1,0 +1,8 @@
+name: 'Commerce Lightning'
+type: module
+description: 'Makes lightning(LND) payments available via Commerce.'
+core: 8.x
+package: 'VelasCommerce'
+dependencies:
+  - commerce
+  - commerce_payment
