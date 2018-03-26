@@ -1,0 +1,4 @@
+services:
+  commerce_lightning.connect:
+    class: Drupal\commerce_lightning\Connect
+    arguments: ['@config.factory', '@state']
