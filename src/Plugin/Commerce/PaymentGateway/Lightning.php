@@ -34,6 +34,60 @@ class Lightning extends OnsitePaymentGatewayBase implements LightningInterface {
   /**
    * {@inheritdoc}
    */
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
+    $form = parent::buildConfigurationForm($form, $form_state);
+
+    $form['app_name'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Application Name'),
+      '#default_value' => $this->configuration['app_name'],
+      '#required' => TRUE,
+    ];
+
+    $form['app_endpoint'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Application Endpoint'),
+      '#default_value' => $this->configuration['app_endpoint'],
+      '#required' => TRUE,
+    ];
+
+    $form['app_macaroon'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Macaroon Hex'),
+      '#default_value' => $this->configuration['app_macaroon'],
+      '#required' => TRUE,
+    ];
+
+    return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function validateConfigurationForm(array &$form, FormStateInterface $form_state) {
+    parent::validateConfigurationForm($form, $form_state);
+    $values = $form_state->getValue($form['#parents']);
+
+    //
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
+    parent::submitConfigurationForm($form, $form_state);
+
+    if (!$form_state->getErrors()) {
+      $values = $form_state->getValue($form['#parents']);
+      $this->configuration['app_name'] = $values['app_name'];
+      $this->configuration['app_endpoint'] = $values['app_endpoint'];
+      $this->configuration['app_macaroon'] = $values['app_macaroon'];
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function createPayment(PaymentInterface $payment, $capture = TRUE) {
 
   }
